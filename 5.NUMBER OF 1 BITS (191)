@@ -1,0 +1,29 @@
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        count = 0
+        while n > 0:
+            n = n & (n - 1)
+            count += 1
+        return count
+
+    def hammingWeight_shift(self, n: int) -> int:
+        count = 0
+        while n > 0:
+            count += n & 1
+            n >>= 1
+        return count
+
+
+if __name__ == "__main__":
+    sol = Solution()
+    
+    test_cases = [
+        (11, 3),
+        (128, 1),
+        (2147483645, 30)
+    ]
+    
+    for n, expected in test_cases:
+        assert sol.hammingWeight(n) == expected
+        assert sol.hammingWeight_shift(n) == expected
+        print(f"Input: {n} -> Output: {expected}")
