@@ -1,0 +1,53 @@
+class Solution:
+
+    def solveSudoku(self, board: list[list[str]]) -> None:
+        def isValid(r, c, val):
+            for i in range(9):
+                if board[r][i] == val:
+                    return False
+                if board[i][c] == val:
+                    return False
+                if board[3 * (r // 3) + i // 3][3 * (c // 3) + i % 3] == val:
+                    return False
+            return True
+
+        def solve():
+            for r in range(9):
+                for c in range(9):
+                    if board[r][c] == ".":
+                        for val in map(str, range(1, 10)):
+                            if isValid(r, c, val):
+                                board[r][c] = val
+                                if solve():
+                                    return True
+                                board[r][c] = "."
+                        return False
+            return True
+
+        solve()
+
+
+if __name__ == "__main__":
+    solution = Solution()
+
+    example_board = [
+        ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+        ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+        [".", "9", "8", ".", ".", ".", ".", "6", "."],
+        ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+        ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+        ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+        [".", "6", ".", ".", ".", ".", "2", "8", "."],
+        [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+        [".", ".", ".", ".", "8", ".", ".", "7", "9"],
+    ]
+
+    print("Input Board:")
+    for row in example_board:
+        print(row)
+
+    solution.solveSudoku(example_board)
+
+    print("\nSolved Board:")
+    for row in example_board:
+        print(row)
